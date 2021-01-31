@@ -30,7 +30,6 @@ class Route
                 File::get($request['url_string'], [], "3M");
                 break;
             default:
-
                 if (array_key_exists($request['url_string'], $route_list) && !is_array($route_list[$request['url_string']])) {
                     if (substr($route_list[$request['url_string']], -3) == "php") {
                         Response::print_header();

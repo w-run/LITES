@@ -2,9 +2,6 @@
 
 namespace core\lib;
 
-use mysqli_result;
-
-
 class Data
 {
 

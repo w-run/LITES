@@ -7,7 +7,7 @@ class File
 {
     protected static $ban_ext = ["exe"];
 
-    public static function get($file,$header=[],$cache="0")
+    public static function get($file, $header = [], $cache = "0")
     {
         $w = 0;
         if (strstr($file, "@")) {
@@ -22,18 +22,18 @@ class File
             $mime = self::get_mime($file);
             $header = array_merge([
                 "Content-type" => $mime . ";charset=utf-8"
-            ],$header);
+            ], $header);
             if (!in_array($type, ['php', 'json']))
                 $header['Content-Length'] = filesize($file);
 
             if ($w == 0)
-                Response::print(file_get_contents($file), $header,$cache);
+                Response::print(file_get_contents($file), $header, $cache);
             else {
                 $res = Image::thumb($file, $w, $w);
-                Response::print($res['content'],[
+                Response::print($res['content'], [
                     "Content-type" => $res['mime'] . ";charset=utf-8",
                     "Content-Length" => $res['size']
-                ],$cache);
+                ], $cache);
             }
         } else {
             Error::notfound();
@@ -66,7 +66,7 @@ class File
             Error::notfound();
     }
 
-    public static function upload($file,$base_path = "res/img", $allow = ['jpg', 'png', 'gif'], $maxsize = 2048,$randName = true)
+    public static function upload($file, $base_path = "res/img", $allow = ['jpg', 'png', 'gif'], $maxsize = 2048, $randName = true)
     {
         $maxsize *= 1024;
         if ($file['error'] != 0)
@@ -90,15 +90,15 @@ class File
 
         $type = substr(strrchr($file['name'], '.'), 1);
         if (!in_array($type, $allow))
-            Error::callback_error(ERR_FILE_DENIED,[$type,$allow]);
+            Error::callback_error(ERR_FILE_DENIED, [$type, $allow]);
 
-        if($randName)
+        if ($randName)
             $new = date('dHis') . rand(1000, 9999) . "_" . session_id();
         else
             $new = session_id();
         $new .= strrchr($file['name'], '.');
-        $new_name = $new; 
-        $path = $base_path."/" . Date::cur_time("Y-m");
+        $new_name = $new;
+        $path = $base_path . "/" . Date::cur_time("Y-m");
         if (!file_exists($path)) {
             $stat = mkdir($path, 0777, true);
         }
@@ -106,7 +106,7 @@ class File
         $result = move_uploaded_file($file['tmp_name'], $target);
 
         if ($result) {
-            if($type=='gif')
+            if ($type == 'gif')
                 Image::gif2jpg($target);
             return $target;
         } else {
@@ -114,31 +114,31 @@ class File
         }
     }
 
-    public static function save($remoteFile,$path="res/img",$randName = true)
+    public static function save($remoteFile, $path = "res/img", $randName = true)
     {
-        if($randName)
+        if ($randName)
             $name = date('dHis') . rand(1000, 9999) . "_" . session_id();
         else
             $name = session_id();
         $type = strrchr(strrchr($remoteFile, '/'), '.');
-        $type = $type==""?"png":$type;
+        $type = $type == "" ? "png" : $type;
         $path = $path . "/" . Date::cur_time("Y-m");
-        $target = $path . '/' . $name  . $type;
+        $target = $path . '/' . $name . $type;
         if (!file_exists($path)) {
             $stat = mkdir($path, 0777, true);
         }
         $content = file_get_contents($remoteFile);
-        $file = fopen($target,"w");
+        $file = fopen($target, "w");
 
-        fwrite($file,$content);
+        fwrite($file, $content);
         fclose($file);
         return $target;
     }
 
     public static function write($file, $content)
     {
-        $file = fopen($file,"w");
-        fwrite($file,$content);
+        $file = fopen($file, "w");
+        fwrite($file, $content);
         fclose($file);
     }
 

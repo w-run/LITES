@@ -6,7 +6,7 @@ namespace core\lib;
 class Token
 {
 
-    const key = "L0629779230686459054449523202101";
+    const key = "L123456789012345678901234567890R";
 
     public static function en_token($sid)
     {
@@ -14,15 +14,15 @@ class Token
         $str = $str ^ self::key;
         $str = base64_encode($str);
         $str = base64_encode($str);
-        $str = str_replace("=", "!", $str);
-        $str = "!HX!" . $str;
+        $str = str_replace("=", "_", $str);
+        $str = "_LITES_" . $str;
         return $str;
     }
 
     public static function de_token($token)
     {
-        $str = str_replace("!HX!", "", $token);
-        $str = str_replace("!", "=", $str);
+        $str = str_replace("_LITES_", "", $token);
+        $str = str_replace("_", "=", $str);
         $str = base64_decode($str);
         $str = base64_decode($str);
         $str = $str ^ self::key;

@@ -14,7 +14,8 @@ class Date
     {
         return time() - strtotime($time);
     }
-    public static function time_format($time,$fmt = 'Y-m-d H:i:s' )
+
+    public static function time_format($time, $fmt = 'Y-m-d H:i:s')
     {
         return date($fmt, intval(strtotime($time)));
     }

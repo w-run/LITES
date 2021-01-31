@@ -12,7 +12,7 @@ class MFA
 {
     protected $_codeLength = 6;
 
-    public function get_secret($str=null,$secretLength = 16)
+    public function get_secret($str = null, $secretLength = 16)
     {
         $validChars = $this->_getBase32LookupTable();
 
@@ -22,12 +22,12 @@ class MFA
         }
         $secret = '';
         $rnd = false;
-        if($str!=null){
-            $str = base64_encode(str_pad($str,32))^md5($str^"WRUN_LITES");
+        if ($str != null) {
+            $str = base64_encode(str_pad($str, 32)) ^ md5($str ^ "WRUN_LITES");
             $str .= bin2hex($str);
             $str .= md5($str);
-            $rnd = substr($str,0,$secretLength);
-        }elseif (function_exists('random_bytes')) {
+            $rnd = substr($str, 0, $secretLength);
+        } elseif (function_exists('random_bytes')) {
             $rnd = random_bytes($secretLength);
         } elseif (function_exists('mcrypt_create_iv')) {
             $rnd = mcrypt_create_iv($secretLength, MCRYPT_DEV_URANDOM);
@@ -97,7 +97,7 @@ class MFA
         $urlencoded = $this->get_link($account, $secret, $issuer);
 
         $res = Image::qrcode($urlencoded, $level, $width, $height);
-        return "data:image/png;base64,".base64_encode($res['content']);
+        return "data:image/png;base64," . base64_encode($res['content']);
     }
 
 
@@ -106,7 +106,7 @@ class MFA
         $urlencoded = 'otpauth://totp/' . $account . '?secret=' . $secret . '';
         if (isset($issuer)) {
             $urlencoded .= '&issuer=' . $issuer;
-        }else{
+        } else {
             $urlencoded .= '&issuer=' . Config::system('name');
         }
         return $urlencoded;

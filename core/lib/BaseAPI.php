@@ -27,7 +27,7 @@ class BaseAPI
         }
         $this->api = $this->request['url'][1];
         $this->handle = str_replace("/", "_", Request::url_cut($this->request['url'], 2));
-        Auth::api($this->api,$this->handle);
+        Auth::api($this->api, $this->handle);
         $this->init($func);
     }
 

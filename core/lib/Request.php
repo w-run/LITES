@@ -2,9 +2,6 @@
 
 namespace core\lib;
 
-
-use http\Url;
-
 class Request
 {
 

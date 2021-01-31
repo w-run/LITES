@@ -19,7 +19,7 @@ class Loader
         if (is_file($file)) {
             include_once $file;
             return;
-        }else{
+        } else {
             Error::callback_error(ERR_SERVER);
         }
     }

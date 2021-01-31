@@ -28,8 +28,8 @@ class Auth
         if ($token == "") {
             session_start();
             $sid = session_id();
-            $i = intval(substr($sid,16,16));
-            if($i>0)
+            $i = intval(substr($sid, 16, 16));
+            if ($i > 0)
                 Session::denied();
             $token = Token::en_token($sid);
         } else {

@@ -9,13 +9,13 @@ class L
         include "core/lib/Loader.php";
         spl_autoload_register("core\\lib\\Loader::autoload");
         Error::register_retCode();
-        define("CONFIG_FILE","core/conf/config.json");
+        define("CONFIG_FILE", "core/conf/config.json");
         $request = Request::init();
         Auth::request();
         define("L_DEBUG", $request['isDebug'] ? "on" : "off");
-        if (L_DEBUG != "on"){
+        if (L_DEBUG != "on") {
             error_reporting(0);
-        }else
+        } else
             error_reporting(E_ALL);
         Route::init($request);
     }
@@ -36,7 +36,7 @@ class L
 
     public static function basePath()
     {
-        return str_replace("\\","/",dirname(dirname(dirname(__FILE__))));
+        return str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
     }
 
 }

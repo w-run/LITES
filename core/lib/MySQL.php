@@ -44,11 +44,11 @@ class MySQL
     public function query($sql = "")
     {
         $sql .= ";";
-        $this->con->query("SET NAMES utf8mb4");  
+        $this->con->query("SET NAMES utf8mb4");
 
         $res = $this->con->query($sql);
         if ($this->con->error != "")
-            throw new Exception($this->con->error.":".$sql);
+            throw new Exception($this->con->error . ":" . $sql);
         return $res;
     }
 

@@ -74,9 +74,10 @@ class Web
         }
         curl_close($ci);
         if ($response === false) {
-            switch ($errcode){
+            switch ($errcode) {
                 case CURLE_OPERATION_TIMEDOUT:
                     Error::callback_error(ERR_GATEWAY_TIMEOUT);
+                    break;
                 default:
                     Error::callback_error(ERR_GATEWAY_FAIL);
             }

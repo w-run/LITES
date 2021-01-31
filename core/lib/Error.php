@@ -3,7 +3,6 @@
 namespace core\lib;
 
 
-
 class Error
 {
 
@@ -20,25 +19,24 @@ class Error
     }
 
 
-
-    public static function callback_error($code,$data=[])
+    public static function callback_error($code, $data = [])
     {
         header("Content-type:text/json;charset=utf-8");
-        $all_retCode = array_keys(get_defined_constants(),$code);
+        $all_retCode = array_keys(get_defined_constants(), $code);
         $errMsg = "unknow";
-        foreach ($all_retCode as $item){
-            if(!strstr("ERR",$item))
-                $errMsg = str_replace("err ","",str_replace("_"," ",strtolower($item))) ;
+        foreach ($all_retCode as $item) {
+            if (!strstr("ERR", $item))
+                $errMsg = str_replace("err ", "", str_replace("_", " ", strtolower($item)));
         }
         $res = array(
             "errCode" => $code,
             "errMsg" => $errMsg
         );
         Error::debug($res);
-        if($code==104)header("Status: 404 Not Found");
-        if($code==300)header("Status: 502 Bad Gateway");
+        if ($code == 104) header("Status: 404 Not Found");
+        if ($code == 300) header("Status: 502 Bad Gateway");
 
-        Response::print($data,$res);
+        Response::print($data, $res);
     }
 
 

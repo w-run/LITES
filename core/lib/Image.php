@@ -43,67 +43,67 @@ class Image
         ];
     }
 
-    public static function resize($source,$maxWidth,$maxHeight)
+    public static function resize($source, $maxWidth, $maxHeight)
     {
         $img_info = getimagesize($source);
         $src_width = $img_info[0];
         $src_height = $img_info[1];
         $dst_width = $src_width;
         $dst_height = $src_height;
-        if($dst_height > $dst_width){
-            if($dst_width>$maxWidth){
+        if ($dst_height > $dst_width) {
+            if ($dst_width > $maxWidth) {
                 $dst_width = $maxWidth;
                 $dst_height = $src_height / $src_width * $maxWidth;
             }
-            if($dst_height>$maxHeight){
+            if ($dst_height > $maxHeight) {
                 $dst_height = $maxHeight;
                 $dst_width = $src_width / $src_height * $maxHeight;
             }
-        }else if($dst_height < $dst_width){
-            if($dst_height>$maxWidth){
+        } else if ($dst_height < $dst_width) {
+            if ($dst_height > $maxWidth) {
                 $dst_height = $maxWidth;
                 $dst_width = $src_width / $src_height * $maxWidth;
             }
-            if($dst_width>$maxHeight){
+            if ($dst_width > $maxHeight) {
                 $dst_width = $maxHeight;
                 $dst_height = $src_height / $src_width * $maxHeight;
             }
-        }else{
+        } else {
             $dst_width = $dst_height = $maxWidth;
         }
-        return self::thumb($source,$dst_width,$dst_height);
+        return self::thumb($source, $dst_width, $dst_height);
     }
 
     public static function gif2jpg($source)
     {
-        $output=str_replace('.gif','.gif.jpg',$source);
-        $image=imagecreatefromgif($source);
-        imagejpeg($image,$output);
+        $output = str_replace('.gif', '.gif.jpg', $source);
+        $image = imagecreatefromgif($source);
+        imagejpeg($image, $output);
         imagedestroy($image);
     }
 
     public static function thumb_forWx($source)
     {
-        $res = self::resize($source,750,1334);
-        $name = "temp/img/".time().rand(1000,9999).".".($res['ext']=='jpeg'?'jpg':$res['ext']);
-        $file = fopen($name,"w");
+        $res = self::resize($source, 750, 1334);
+        $name = "temp/img/" . time() . rand(1000, 9999) . "." . ($res['ext'] == 'jpeg' ? 'jpg' : $res['ext']);
+        $file = fopen($name, "w");
 
-        fwrite($file,$res['content']);
+        fwrite($file, $res['content']);
         fclose($file);
-        return L::basePath()."/".$name;
+        return L::basePath() . "/" . $name;
     }
 
-    public static function qrcode($text,$level="M",$width=500,$height=500)
+    public static function qrcode($text, $level = "M", $width = 500, $height = 500)
     {
-        $level = ['L'=>QR_ECLEVEL_L,'M'=>QR_ECLEVEL_M,'Q'=>QR_ECLEVEL_Q,'H'=>QR_ECLEVEL_H][strtoupper($level)];
+        $level = ['L' => QR_ECLEVEL_L, 'M' => QR_ECLEVEL_M, 'Q' => QR_ECLEVEL_Q, 'H' => QR_ECLEVEL_H][strtoupper($level)];
         $name = date('dHis') . rand(1000, 9999) . "_" . session_id() . ".png";
         $path = "temp/img/";
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
-        QRcode::png($text,$path.$name,$level,4,1);
-        $res = self::resize($path."/".$name,$width,$height);
-        unlink($path."/".$name);
+        QRcode::png($text, $path . $name, $level, 4, 1);
+        $res = self::resize($path . "/" . $name, $width, $height);
+        unlink($path . "/" . $name);
         return $res;
     }
 
