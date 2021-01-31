@@ -1,0 +1,70 @@
+{
+  "api": {
+    "admin": {
+      "article": "article",
+      "login": "login",
+      "logout": "logout",
+      "review": "review",
+      "site": "site",
+      "status": "status",
+      "topic": "topic",
+      "user": "user"
+    },
+    "article": {
+      "add": "add",
+      "del": "del",
+      "list": "list",
+      "read": "read"
+    },
+    "file": {
+      "upload": "upload"
+    },
+    "qr": {
+      "": "get"
+    },
+    "review": {
+      "add": "add",
+      "count": "count",
+      "del": "del",
+      "list": "list"
+    },
+    "tag": {
+      "list": "list"
+    },
+    "test": {
+      "area": "area",
+      "console": "console",
+      "database": "database",
+      "express": "express",
+      "hots": "hots",
+      "map": "map",
+      "markdown": "markdown",
+      "mfa": "mfa",
+      "request": "request",
+      "save": "save",
+      "sms": "sms",
+      "sub": "sub",
+      "trans": "trans",
+      "weather": "weather",
+      "wxapp": "wxapp",
+      "xml": "xml"
+    },
+    "topic": {
+      "add": "add",
+      "del": "del",
+      "list": "list",
+      "read": "read"
+    },
+    "user": {
+      "": "login_state",
+      "edit": "profile_edit",
+      "login": "login",
+      "login/test": "login_test",
+      "logout": "login_out",
+      "profile": "profile_get",
+      "reg": "reg"
+    }
+  },
+  "error": "error.php",
+  "favicon.ico": "res/favicon.ico"
+}

@@ -1,0 +1,15 @@
+{
+  "system": {
+    "name": "LITES",
+    "domain": "lites.cn",
+    "version": "V1.0.0",
+    "allow_host": "http:\/\/127.0.0.1"
+  },
+  "mysql": {
+    "host": "localhost",
+    "port": "3306",
+    "usr": "root",
+    "pwd": "",
+    "lib": "lites"
+  }
+}
