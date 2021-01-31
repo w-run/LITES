@@ -20,27 +20,27 @@ class SMS
         $this->mark = $config['sms']['sign'];
     }
 
-    // 生成验证码文本
+
     public static function code_str($CODE)
     {
         return "您的验证码是$CODE" . "（30分钟内有效）。如非本人操作，请忽略本短信。";
     }
 
-    // 发送短信
+
     public function send($phone, $text)
     {
         $text = $this->mark . $text;
         $ch = curl_init();
-        /* 设置验证方式 */
+
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Accept:text/plain;charset=utf-8',
             'Content-Type:application/x-www-form-urlencoded', 'charset=utf-8'
         ));
-        /* 设置返回结果为流 */
+
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        /* 设置超时时间*/
+
         curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-        /* 设置通信方式 */
+
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_URL, 'https://sms.yunpian.com/v2/sms/single_send.json');
@@ -50,7 +50,7 @@ class SMS
         return json_decode($result, true);
     }
 
-    // 检查验证码正确
+
     public function check($phone, $code)
     {
         $sc = Session::get("sms_code");

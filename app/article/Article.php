@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file Article.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-23
- */
+
 
 namespace app\article;
 
@@ -17,7 +12,7 @@ class Article
     private $rows = array("aid", "title", "content", "uid", "time", "state");
 
 
-    public function list($show_factor,$p=0,$s=10)
+    public function list($show_factor, $p = 0, $s = 10)
     {
         $start = 0;
         if ($p > 0) {
@@ -29,15 +24,15 @@ class Article
             $show_factor = str_replace($rows[$i], "article." . $rows[$i], $show_factor);
             $rows[$i] = "article." . $rows[$i] . " AS " . $rows[$i];
         }
-        array_push($rows,  "IFNULL(user.nickname,user.usr) as nickname", "usr", "IFNULL(avatar,'temp/avatar.png') as avatar");
-        $res = $dao->get_union("user", "article.uid = user.uid", $show_factor, $rows,"$start,$s");
+        array_push($rows, "IFNULL(user.nickname,user.usr) as nickname", "usr", "IFNULL(avatar,'temp/avatar.png') as avatar");
+        $res = $dao->get_union("user", "article.uid = user.uid", $show_factor, $rows, "$start,$s");
         return $res;
     }
 
     public function read($aid)
     {
         $show_factor = "aid=$aid AND state = 0";
-        $res = $this->list($show_factor,0,1);
+        $res = $this->list($show_factor, 0, 1);
         if (count($res) == 0)
             return null;
         return $res[0];
@@ -58,11 +53,11 @@ class Article
         return $res == 1;
     }
 
-    public function del($aid, $uid=null)
+    public function del($aid, $uid = null)
     {
         $dao = new Data("article");
         $show_factor = "aid=$aid";
-        if($uid!=null)
+        if ($uid != null)
             $show_factor .= " and uid=$uid";
         $res = $dao->edit($show_factor, ["state" => -1]);
         return $res == 1;

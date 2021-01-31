@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file UserAdmin.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-24
- */
+
 
 namespace app\admin;
 
@@ -51,7 +46,7 @@ class ReviewAdmin extends DaoAdmin
         $data = $dao->get($where, $p, $s);
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['content'] = mb_substr($data[$i]['content'], 0, 32);
-//            $data[$i]['time'] = Date::time_h($data[$i]['time']);
+
             $data[$i]['state'] = $this->state_code[$data[$i]['state']];
         }
         $this->callback = $this->callback_list([

@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file API.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-23
- */
+
 
 namespace app\article;
 
@@ -21,8 +16,8 @@ class API extends BaseAPI
     public static function format_data($list)
     {
         $md = new Parser();
-        foreach ($list as $i => $item){
-            $list[$i]['content'] = mb_substr(strip_tags($md->parse($item['content'])),0,150);
+        foreach ($list as $i => $item) {
+            $list[$i]['content'] = mb_substr(strip_tags($md->parse($item['content'])), 0, 150);
             $list[$i]['time'] = Date::time_h($item['time']);
         }
         return $list;
@@ -34,7 +29,7 @@ class API extends BaseAPI
         $s = $this->getForm_opt("s", "10");
         $where = $this->getForm_opt("where", "state = 0");
         $article = new Article();
-        $res = $article->list($where,$p,$s);
+        $res = $article->list($where, $p, $s);
         $this->callback(self::format_data($res));
     }
 
@@ -43,11 +38,11 @@ class API extends BaseAPI
         $aid = $this->getForm("aid")['aid'];
         $article = new Article();
         $res = $article->read($aid);
-        if($res!=null){
+        if ($res != null) {
             $md = new Parser();
             $res['content'] = $md->parse($res['content']);
             $this->callback($res);
-        }else
+        } else
             $this->callback_error("article not found");
     }
 
@@ -58,7 +53,7 @@ class API extends BaseAPI
         $form = $this->getForm("aid");
         $aid = $form['aid'];
         $article = new Article();
-        if(UserGroup::get_ugid()==9)
+        if (UserGroup::get_ugid() == 9)
             $res = $article->del($aid);
         else
             $res = $article->del($aid, $uid);
@@ -72,8 +67,8 @@ class API extends BaseAPI
     {
         $form = $this->getForm("title content");
         $content = $form['content'];
-        $content = str_replace("\\","\\\\",$content);
-        $content = str_replace("'","\'",$content);
+        $content = str_replace("\\", "\\\\", $content);
+        $content = str_replace("'", "\'", $content);
         $title = $form['title'];
         $uid = $this->getUid();
         $data = array(

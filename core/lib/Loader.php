@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file Loader.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-18
- */
+
 
 namespace core\lib;
 

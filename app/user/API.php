@@ -15,7 +15,6 @@ class API extends BaseAPI
 {
 
 
-
     public function fast_reg($data)
     {
 
@@ -35,22 +34,22 @@ class API extends BaseAPI
     public function reg()
     {
         $form = $this->getForm('usr pwd repwd');
-        if($form['pwd']!=$form['repwd'])
+        if ($form['pwd'] != $form['repwd'])
             $this->callback_error('repwd error');
-        if(strlen($form['usr'])<3 || strlen($form['usr'])>12)
+        if (strlen($form['usr']) < 3 || strlen($form['usr']) > 12)
             $this->callback_error("usr length error");
-        if(strlen($form['pwd'])<6 || strlen($form['pwd'])>32)
+        if (strlen($form['pwd']) < 6 || strlen($form['pwd']) > 32)
             $this->callback_error("pwd length error");
 
         $user = new User();
-        $res_exist = $user->getBy('usr',$form['usr']);
+        $res_exist = $user->getBy('usr', $form['usr']);
         if ($res_exist != null)
             $this->callback_error("usr already exist");
         $res = $user->add([
             'usr' => $form['usr'],
             'pwd' => $form['pwd']
         ]);
-        if($res)
+        if ($res)
             $this->callback();
         else
             $this->callback_error("user reg error");
@@ -60,11 +59,11 @@ class API extends BaseAPI
     {
         $form = $this->getForm('usr pwd');
         $user = new User();
-        $res = $user->getBy('usr',$form['usr']);
+        $res = $user->getBy('usr', $form['usr']);
         if ($res != null) {
-            if($res['state']==-1)
+            if ($res['state'] == -1)
                 $this->callback_error('user banned');
-            if($res['pwd'] != $form['pwd'])
+            if ($res['pwd'] != $form['pwd'])
                 $this->callback_error('password error');
             $res = $this->format_data($res);
             $this->callback($res, [

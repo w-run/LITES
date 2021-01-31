@@ -129,7 +129,7 @@ class Parser
         $blocks = $this->prsBlock($text, $lines);
         $html = '';
 
-        // inline mode for single normal block
+
         if ($inline && count($blocks) == 1 && $blocks[0][0] == 'normal') {
             $blocks[0][3] = true;
         }
@@ -226,7 +226,7 @@ class Parser
         $self = $this;
         $text = $this->call('beforeParseInline', $text);
 
-        // code
+
         $text = preg_replace_callback(
             "/(^|[^\\\])(`+)(.+?)\\2/",
             function ($matches) use ($self) {
@@ -237,7 +237,7 @@ class Parser
             $text
         );
 
-        // mathjax
+
         $text = preg_replace_callback(
             "/(^|[^\\\])(\\$+)(.+?)\\2/",
             function ($matches) use ($self) {
@@ -248,7 +248,7 @@ class Parser
             $text
         );
 
-        // escape
+
         $text = preg_replace_callback(
             "/\\\(.)/u",
             function ($matches) use ($self) {
@@ -260,7 +260,7 @@ class Parser
             $text
         );
 
-        // link
+
         $text = preg_replace_callback(
             "/<(https?:\/\/.+)>/i",
             function ($matches) use ($self) {
@@ -274,7 +274,7 @@ class Parser
             $text
         );
 
-        // encode unsafe tags
+
         $text = preg_replace_callback(
             "/<(\/?)([a-z0-9-]+)(\s+[^>]*)?>/i",
             function ($matches) use ($self, $whiteList) {
@@ -297,7 +297,7 @@ class Parser
 
         $text = str_replace(array('<', '>'), array('&lt;', '&gt;'), $text);
 
-        // footnote
+
         $text = preg_replace_callback(
             "/\[\^((?:[^\]]|\\\\\]|\\\\\[)+?)\]/",
             function ($matches) use ($self) {
@@ -315,7 +315,7 @@ class Parser
             $text
         );
 
-        // image
+
         $text = preg_replace_callback(
             "/!\[((?:[^\]]|\\\\\]|\\\\\[)*?)\]\(((?:[^\)]|\\\\\)|\\\\\()+?)\)/",
             function ($matches) use ($self) {
@@ -343,7 +343,7 @@ class Parser
             $text
         );
 
-        // link
+
         $text = preg_replace_callback(
             "/\[((?:[^\]]|\\\\\]|\\\\\[)+?)\]\(((?:[^\)]|\\\\\)|\\\\\()+?)\)/",
             function ($matches) use ($self) {
@@ -372,7 +372,7 @@ class Parser
             $text
         );
 
-        // strong and em and some fuck
+
         $text = $this->prsInlineCallback($text);
         $text = preg_replace(
             "/<([_a-z0-9-\.\+]+@[^@]+\.[a-z]{2,})>/i",
@@ -380,7 +380,7 @@ class Parser
             $text
         );
 
-        // autolink url
+
         if ($enableAutoLink) {
             $text = preg_replace_callback(
                 "/(^|[^\"])((https?):[\p{L}_0-9-\.\/%#!@\?\+=~\|\,&\(\)]+)($|[^\"])/iu",
@@ -490,7 +490,7 @@ class Parser
             'html' => false
         );
 
-        // analyze by line
+
         foreach ($lines as $key => $line) {
             $block = $this->get_block();
             $args = array($block, $key, $line, &$state, $lines);
@@ -538,7 +538,7 @@ class Parser
             $space = strlen($matches[1]);
             $state['empty'] = 0;
 
-            // opened
+
             if ($this->is_block('list')) {
                 $this->set_block($key, $space);
             } else {
@@ -819,7 +819,7 @@ class Parser
     private function prsBlockMh($block, $key, $line, &$state, $lines)
     {
         if (preg_match("/^\s*((=|-){2,})\s*$/", $line, $matches)
-            && ($block && $block[0] == "normal" && !preg_match("/^\s*$/", $lines[$block[2]]))) {    // check if last line isn't empty
+            && ($block && $block[0] == "normal" && !preg_match("/^\s*$/", $lines[$block[2]]))) {
             if ($this->is_block('normal')) {
                 $this->back_block(1, 'mh', $matches[1][0] == '=' ? 1 : 2)
                     ->set_block($key)
@@ -875,7 +875,7 @@ class Parser
                 $this->start_block('normal', $key);
             }
         } else if ($this->is_block('quote')) {
-            if (!preg_match("/^(\s*)$/", $line)) { // empty line
+            if (!preg_match("/^(\s*)$/", $line)) {
                 $this->set_block($key);
             } else {
                 $this->start_block('normal', $key);
@@ -920,19 +920,19 @@ class Parser
             }
 
             if ('normal' == $type) {
-                // combine two blocks
+
                 $types = array('list', 'quote');
 
                 if ($from == $to && preg_match("/^\s*$/", $lines[$from])
                     && !empty($prevBlock) && !empty($nextBlock)) {
                     if ($prevBlock[0] == $nextBlock[0] && in_array($prevBlock[0], $types)) {
-                        // combine 3 blocks
+
                         $blocks[$key - 1] = array(
                             $prevBlock[0], $prevBlock[1], $nextBlock[2], NULL
                         );
                         array_splice($blocks, $key, 2);
 
-                        // do not move
+
                         $moved = true;
                     }
                 }
@@ -1036,7 +1036,7 @@ class Parser
         $secondFound = false;
         $rows = array();
 
-        // count levels
+
         foreach ($lines as $key => $line) {
             if (preg_match("/^(\s*)((?:[0-9]+\.?)|\-|\+|\*)(\s+)(.*)$/i", $line, $matches)) {
                 $space = strlen($matches[1]);

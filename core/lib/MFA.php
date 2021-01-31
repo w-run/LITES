@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file MFA.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-28
- */
+
 
 namespace core\lib;
 
@@ -16,7 +11,7 @@ class MFA
     {
         $validChars = $this->_getBase32LookupTable();
 
-        // 密钥有效长度 80-640位
+
         if ($secretLength < 16 || $secretLength > 128) {
             throw new Exception('Bad secret length');
         }
@@ -48,14 +43,7 @@ class MFA
         return $secret;
     }
 
-    /**
-     * 以密钥和时间计算编码
-     *
-     * @param string $secret
-     * @param int|null $timeSlice
-     *
-     * @return string
-     */
+
     public function get_code($secret, $timeSlice = null)
     {
         if ($timeSlice === null) {
@@ -78,16 +66,7 @@ class MFA
         return str_pad($value % $modulo, $this->_codeLength, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * Get QR-Code
-     *
-     * @param string $account
-     * @param string $secret
-     * @param string $title
-     * @param array $params
-     *
-     * @return string
-     */
+
     public function get_qrimg($account, $secret, $issuer = null, $params = array())
     {
         $width = !empty($params['width']) && (int)$params['width'] > 0 ? (int)$params['width'] : 200;
@@ -112,17 +91,7 @@ class MFA
         return $urlencoded;
     }
 
-    /**
-     * 校验代码
-     * 允许 $discrepancy*30sec 前至现在
-     *
-     * @param string $secret
-     * @param string $code
-     * @param int $discrepancy 向后兼容几个时间单位（30s）
-     * @param int|null $currentTimeSlice 自定义时间点
-     *
-     * @return bool
-     */
+
     public function verify($secret, $code, $discrepancy = 1, $currentTimeSlice = null)
     {
         if ($currentTimeSlice === null) {
@@ -143,26 +112,14 @@ class MFA
         return false;
     }
 
-    /**
-     * 设置代码长度，应大于等于6。
-     *
-     * @param int $length
-     *
-     * @return MFA
-     */
+
     public function setCodeLength($length)
     {
         $this->_codeLength = $length;
         return $this;
     }
 
-    /**
-     * 辅助解码 base32
-     *
-     * @param $secret
-     *
-     * @return bool|string
-     */
+
     private function _base32Decode($secret)
     {
         if (empty($secret)) {
@@ -203,30 +160,19 @@ class MFA
         return $binaryString;
     }
 
-    /**
-     * 获取包含所有32个字符的数组，以便从base32进行解码/编码。
-     *
-     * @return array
-     */
+
     private function _getBase32LookupTable()
     {
         return array(
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', //  7
-            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', // 15
-            'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', // 23
-            'Y', 'Z', '2', '3', '4', '5', '6', '7', // 31
-            '=',  // 填充字符
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+            'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+            'Y', 'Z', '2', '3', '4', '5', '6', '7',
+            '=',
         );
     }
 
-    /**
-     * 时效检验
-     *
-     * @param string $safeString The internal (safe) value to be checked
-     * @param string $userString The user submitted (unsafe) value
-     *
-     * @return bool
-     */
+
     private function timingSafeEquals($safeString, $userString)
     {
         if (function_exists('hash_equals')) {

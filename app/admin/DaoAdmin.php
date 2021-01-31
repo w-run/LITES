@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file UserAdmin.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-24
- */
+
 
 namespace app\admin;
 
@@ -22,7 +17,7 @@ class DaoAdmin
         'type' => "data",
         'data' => []
     ];
-    protected $state_code = ['0'=>'-','-1'=>"x",'1'=>'?'];
+    protected $state_code = ['0' => '-', '-1' => "x", '1' => '?'];
 
     public function __construct($o)
     {
@@ -33,19 +28,19 @@ class DaoAdmin
     public function exec()
     {
         $h = $this->handle;
-        if($h=='get'){
+        if ($h == 'get') {
             $m = get_class_methods($this);
             $a = [];
             $d = [];
             foreach ($m as $v)
-                if(!in_array($v,['exec','getData','callback_list','__construct'])){
-                    array_push($a,$v);
-                    if(array_key_exists($v,$this->menu_desc))
+                if (!in_array($v, ['exec', 'getData', 'callback_list', '__construct'])) {
+                    array_push($a, $v);
+                    if (array_key_exists($v, $this->menu_desc))
                         $d[$v] = $this->menu_desc[$v];
                 }
             return [
                 'state' => $this->state,
-                'callback' => ['type'=>'menu','data'=>json_encode($d)]
+                'callback' => ['type' => 'menu', 'data' => json_encode($d)]
             ];
         }
         if (!method_exists($this, $h))
@@ -69,7 +64,7 @@ class DaoAdmin
             return $default;
     }
 
-    protected function callback_list($title,$handle,$data,$id)
+    protected function callback_list($title, $handle, $data, $id)
     {
         $callback = [];
         $callback['type'] = 'list';
@@ -80,7 +75,7 @@ class DaoAdmin
         return $callback;
     }
 
-    protected function callback_form($field,$data,$id=null)
+    protected function callback_form($field, $data, $id = null)
     {
         $callback = [];
         $callback['type'] = 'form';
@@ -90,7 +85,7 @@ class DaoAdmin
         return $callback;
     }
 
-    public function callback_result($state=true,$errMsg="handle error",$handle="reload")
+    public function callback_result($state = true, $errMsg = "handle error", $handle = "reload")
     {
         $callback = [];
         $callback['type'] = 'result';

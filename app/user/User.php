@@ -10,8 +10,8 @@ use core\lib\Token;
 
 class User
 {
-    private $rows = array("uid", "usr","pwd", "IFNULL(avatar,'temp/avatar.png') as avatar", "IFNULL(nickname,usr) as nickname",
-        "phone", "gender","birth", "ugid", "area_id", "wechat_openid","wechat_unionid",
+    private $rows = array("uid", "usr", "pwd", "IFNULL(avatar,'temp/avatar.png') as avatar", "IFNULL(nickname,usr) as nickname",
+        "phone", "gender", "birth", "ugid", "area_id", "wechat_openid", "wechat_unionid",
         "last_area", "last_time", "reg_area", "reg_time", "state");
 
     public function add($data)
@@ -45,38 +45,36 @@ class User
     }
 
 
-    public function get_list($where = null,$rows = null)
+    public function get_list($where = null, $rows = null)
     {
         $dao = new Data("user");
-        $res = $dao->get($where, $rows==null?$this->rows:$rows,null,"uid ASC");
+        $res = $dao->get($where, $rows == null ? $this->rows : $rows, null, "uid ASC");
         return $res;
     }
 
 
-
-    public function get_list_search($keywords, $p=0, $s=10)
+    public function get_list_search($keywords, $p = 0, $s = 10)
     {
         $start = 0;
         if ($p > 0) {
             $start = $p * $s;
         }
-        $k_arr = explode(" ",trim($keywords));
+        $k_arr = explode(" ", trim($keywords));
         $i = 0;
         $order_arr = [];
-        foreach ($k_arr as $item){
+        foreach ($k_arr as $item) {
             $order_arr[$i++] = "LOCATE('$item',IFNULL(nickname,usr))";
         }
-        $order_res = "IF(".implode(" and ",$order_arr) ."!=0,1,0) DESC, " ;
-        $order_res .= implode(" + ",$order_arr) ." ASC";
-        $k_res = "IFNULL(nickname,usr) REGEXP '".implode("|",$k_arr)."'";
+        $order_res = "IF(" . implode(" and ", $order_arr) . "!=0,1,0) DESC, ";
+        $order_res .= implode(" + ", $order_arr) . " ASC";
+        $k_res = "IFNULL(nickname,usr) REGEXP '" . implode("|", $k_arr) . "'";
         $factor = "$k_res";
         $order = $order_res . ", uid DESC";
         $rows = $this->rows;
         $dao = new Data("user");
-        $res = $dao->get($factor, $rows,"$start,$s",$order);
+        $res = $dao->get($factor, $rows, "$start,$s", $order);
         return $res;
     }
-
 
 
     public function getBy($attr, $data)
@@ -90,15 +88,13 @@ class User
     }
 
 
-
-    public function edit($uid, $data,$self=true)
+    public function edit($uid, $data, $self = true)
     {
         $dao = new Data("user");
         $res = $dao->edit("uid=$uid", $data);
-        if($res==1 && $self)$this->login_refresh();
+        if ($res == 1 && $self) $this->login_refresh();
         return $res == 1;
     }
-
 
 
     public function login_time_refresh($uid)
@@ -114,7 +110,6 @@ class User
         $res = $this->get(Session::get("login_user")['uid']);
         $this->set_login($res);
     }
-
 
 
     public function set_login($u)
@@ -142,13 +137,16 @@ class User
         if ($res == null) {
             $res = array();
             foreach ($this->rows as $key)
-                switch ($key){
+                switch ($key) {
                     case 'ugid':
-                        $res[$key] = 0;break;
+                        $res[$key] = 0;
+                        break;
                     case 'IFNULL(avatar,\'temp/avatar.png\') as avatar':
-                        $res['avatar'] = 'temp/avatar.png';break;
+                        $res['avatar'] = 'temp/avatar.png';
+                        break;
                     case 'IFNULL(nickname,usr) as nickname':
-                        $res['nickname'] = null;break;
+                        $res['nickname'] = null;
+                        break;
                     default:
                         $res[$key] = null;
                 }

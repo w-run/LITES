@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file API.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-27
- */
+
 
 namespace app\qr;
 
@@ -19,8 +14,8 @@ class API extends BaseAPI
     {
         $text = $this->getForm('text')['text'];
         $res = Image::qrcode($text);
-        Response::print($res['content'],[
-            'Content-type'=>$res['mime']
-        ],"5m");
+        Response::print($res['content'], [
+            'Content-type' => $res['mime']
+        ], "5m");
     }
 }

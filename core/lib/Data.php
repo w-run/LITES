@@ -45,8 +45,8 @@ class Data
         $where = $this->make_where($where);
         $limit = $this->make_limit($limit);
         $order = $this->make_order($order);
-        if($where!=null)
-            $union_where=" AND ".$union_where;
+        if ($where != null)
+            $union_where = " AND " . $union_where;
         $str = "SELECT $row FROM $table,$union_table $where$union_where$order$limit";
         $queryRes = $sql->query($str);
         do {
@@ -98,21 +98,20 @@ class Data
     }
 
 
-    public function edit_calc($where, $row, $calcStr = "+1", $update=false)
+    public function edit_calc($where, $row, $calcStr = "+1", $update = false)
     {
         $sql = new MySQL();
         $table = $this->table;
         $datetime = date("Y-m-d H:i:s");
         $upStr = "";
-        if($update)
-            $upStr=", update_time = '$datetime'";
+        if ($update)
+            $upStr = ", update_time = '$datetime'";
         $str = "UPDATE $table SET $row = $row $calcStr $upStr WHERE $where";
         $sql->query($str);
         $res = $sql->query_res();
         $sql->close();
         return $res;
     }
-
 
 
     public function del($where)
@@ -140,13 +139,13 @@ class Data
         return $count[0];
     }
 
-    public function getByTime($field='time',$days = 1,$where = null ,$start = 'NOW()')
+    public function getByTime($field = 'time', $days = 1, $where = null, $start = 'NOW()')
     {
-        if($where==null)
-            $where="";
+        if ($where == null)
+            $where = "";
         else
             $where .= " AND ";
-        $res = $this->get($where."TO_DAYS($start)-TO_DAYS($field)<=$days", ["count(1) as num"])[0]['num'];
+        $res = $this->get($where . "TO_DAYS($start)-TO_DAYS($field)<=$days", ["count(1) as num"])[0]['num'];
         return intval($res);
     }
 
@@ -208,7 +207,6 @@ class Data
         }
         return $group;
     }
-
 
 
 }

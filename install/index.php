@@ -2,8 +2,8 @@
 error_reporting(0);
 function install($system_config, $mysql_config)
 {
-if(file_get_contents('../core/conf/install.lock') !== false)
-    return "已执行过安装程序，重新安装请删除install.lock";
+    if (file_get_contents('../core/conf/install.lock') !== false)
+        return "已执行过安装程序，重新安装请删除install.lock";
     $con = new mysqli(
         $mysql_config['host'],
         $mysql_config['usr'],
@@ -58,7 +58,7 @@ if(file_get_contents('../core/conf/install.lock') !== false)
 
 function test($mysql_config)
 {
-    if(file_get_contents('../core/conf/install.lock') !== false)
+    if (file_get_contents('../core/conf/install.lock') !== false)
         return "已执行过安装程序，重新安装请删除install.lock";
     $con = new mysqli(
         $mysql_config['host'],

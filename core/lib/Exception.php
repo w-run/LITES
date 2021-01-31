@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file Exception.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-28
- */
+
 
 namespace core\lib;
 
@@ -16,7 +11,7 @@ class Exception extends \Exception
 
     public function __construct($message, $code = 0)
     {
-        // ...
+
 
         parent::__construct($message, $code);
     }

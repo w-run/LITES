@@ -57,7 +57,7 @@ class API extends BaseAPI
             $user = ($user == null) ? "test" : $user;
             $res['qr'] = $mfa->get_qrimg($user, Session::get('mfa_sercet'));
             $res['link'] = $mfa->get_link($user, Session::get('mfa_sercet'));
-            // $res['code'] = $mfa->get_code(Session::get('mfa_sercet'));
+
             $res['key'] = strtoupper(join(" ", str_split(Session::get('mfa_sercet'), 4)));
         } else {
             $res['verify'] = $mfa->verify(Session::get('mfa_sercet'), $code);

@@ -92,13 +92,13 @@ button:hover {
 
 .home * {
     -moz-user-select: none;
-    /*火狐*/
+
     -webkit-user-select: none;
-    /*webkit浏览器*/
+
     -ms-user-select: none;
-    /*IE10*/
+
     -khtml-user-select: none;
-    /*早期浏览器*/
+
     user-select: none;
 }
 
@@ -167,7 +167,7 @@ code {
 .home {
     background: linear-gradient(to right bottom, #24b6ff, #ff8baa) center 0 no-repeat;
     background: linear-gradient(to right bottom, #2980b9, #6dd5fa, #ffffff) center 0 no-repeat;
-    /*sky*/
+
     background-size: 100vw 100vh;
     background-attachment: fixed;
 }
@@ -182,7 +182,7 @@ code {
     left: 0;
     background: linear-gradient(to right bottom, #24b6ff, #ff8baa) center 0 no-repeat;
     background: linear-gradient(to right bottom, #2980b9, #6dd5fa, #ffffff) center 0 no-repeat;
-    /*sky*/
+
     background-size: 100vw 100vh;
 }
 
@@ -319,7 +319,6 @@ footer:before {
     z-index: 1;
 }
 
-/*** dialog : start ***/
 
 .alertMask {
     position: fixed;
@@ -444,10 +443,7 @@ footer:before {
     -webkit-tap-highlight-color: transparent;
 }
 
-/*** dialog : end ***/
 
-
-/*** nav-list : start ***/
 .nav-list {
     list-style: none;
     user-select: none;
@@ -501,7 +497,7 @@ footer:before {
 .nav-list .logo {
     padding: 9px 20px;
     display: inline-block;
-    /* background: #0af; */
+
     color: #fff;
     border-radius: 999px;
     transition: .2s;
@@ -519,7 +515,7 @@ footer:before {
     display: inline-block;
     background: #fff;
     color: #ddd;
-    /* border: 5px solid #0af; */
+
     padding: 3px;
     border-radius: 999px;
     font-size: 32px;
@@ -629,10 +625,7 @@ footer:before {
     }
 }
 
-/*** nav-list : end ***/
 
-
-/*** sub-nav : start ***/
 .sub-nav {
     list-style: none;
     padding-top: 60px;
@@ -659,10 +652,7 @@ footer:before {
     color: #0af;
 }
 
-/*** sub-nav : end ***/
 
-
-/*** user-box : start ***/
 .user-box {
     position: absolute;
     bottom: 0;
@@ -734,9 +724,7 @@ footer:before {
     }
 }
 
-/*** user-box : end ***/
 
-/*** sub-card : start ***/
 .sub footer {
     position: absolute;
     bottom: 0;
@@ -812,9 +800,7 @@ ul.sub-content {
     color: #888;
 }
 
-/*** sub-card : end ***/
 
-/*** login-box : start ***/
 .login-box {
     position: absolute;
     bottom: 0;
@@ -875,9 +861,7 @@ ul.sub-content {
     }
 }
 
-/*** login-box : end ***/
 
-/*** main/page : start ***/
 .main-header {
     height: 60px;
     line-height: 60px;
@@ -918,10 +902,7 @@ ul.sub-content {
     user-select: none;
 }
 
-/*** main/page : end ***/
 
-
-/*** list/page : start ***/
 .post-box {
     padding: 20px;
     padding-bottom: 0;
@@ -1414,9 +1395,6 @@ button.submit:active {
     filter: brightness(90%);
 }
 
-/*** list/page : end ***/
-
-/*** doc/page : start ***/
 
 .article-list-item {
     height: 50px;
@@ -1482,7 +1460,6 @@ button.submit:active {
     resize: none;
 }
 
-/*** doc/page : end ***/
 
 @media screen and (max-width: 1400px) {
     .admin .sub {
@@ -1738,7 +1715,7 @@ button.submit:active {
     font-size: 25px;
 }
 
-/*** preview :start ***/
+
 .preview-box {
     position: fixed;
     z-index: 999;
@@ -1776,8 +1753,6 @@ button.submit:active {
 .preview-box.hide {
     animation: hide .2s linear forwards;
 }
-
-/*** preview :end ***/
 
 
 @keyframes loading {
@@ -1843,7 +1818,7 @@ button.submit:active {
 
 }
 
-/* .loading */
+
 .loading::after {
     content: "loading...";
     color: rgba(0, 0, 0, .3);
@@ -1865,10 +1840,10 @@ button.submit:active {
     animation: hide .3s linear forwards;
 }
 
-/*** install : start ***/
+
 .home .install {
     min-width: 375px;
-	width: 40vw;
+    width: 40vw;
     background: #fff;
     margin: 20px auto;
     border-radius: 15px;

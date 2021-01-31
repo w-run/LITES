@@ -169,7 +169,7 @@ class WxApp
         $aesCipher = base64_decode($encryptedData);
         $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
         $dataObj = json_decode($result);
-        if ($dataObj  == NULL)
+        if ($dataObj == NULL)
             return -41003;
         if ($dataObj->watermark->appid != $this->appid)
             return -41004;

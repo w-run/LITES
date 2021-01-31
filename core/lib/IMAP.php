@@ -2,7 +2,7 @@
 
 namespace core\lib;
 
-// To be integrated
+
 class IMAP
 {
 
@@ -12,17 +12,7 @@ class IMAP
     private $conn = null;
     private $email = '';
 
-    /**
-     * MailBox constructor.
-     * @param $username
-     * @param $password
-     * @param $email_address
-     * @param $mail_server
-     * @param $server_type
-     * @param $port
-     * @param bool $ssl
-     * 初始化
-     */
+
     public function __construct($username, $password, $email_address, $mail_server, $server_type, $port, $ssl = false)
     {
         if ($server_type == 'imap') {
@@ -38,9 +28,7 @@ class IMAP
         $this->email = $email_address;
     }
 
-    /**
-     * 连接
-     */
+
     public function connect()
     {
         $this->conn = @imap_open($this->server, $this->username, $this->password, 0);
@@ -51,9 +39,7 @@ class IMAP
         }
     }
 
-    /**
-     * 获取邮件总数
-     */
+
     public function get_mail_total()
     {
         if (!$this->conn) return false;
@@ -61,17 +47,13 @@ class IMAP
         return is_numeric($tmp) ? $tmp : false;
     }
 
-    /**
-     * 获取邮件的头部
-     */
+
     public function get_imap_header($mid)
     {
         return imap_headerinfo($this->conn, $mid);
     }
 
-    /**
-     * 格式化头部信息 $headerinfo get_imap_header 的返回值
-     */
+
     public function get_header_info($mail_header)
     {
         $sender = $mail_header->from[0];
@@ -89,11 +71,7 @@ class IMAP
         return $mail_details;
     }
 
-    /**
-     * 获取邮件内容
-     * @param $mid
-     * @return bool|string
-     */
+
     public function get_body($mid)
     {
         $body = imap_fetchbody($this->conn, $mid, 1);
@@ -123,7 +101,7 @@ class IMAP
                 if ($part->type == 5) {
                     $type = 5;
                 }
-                if ($part->type ==3){
+                if ($part->type == 3) {
                     $type = 3;
                 }
             }
@@ -141,13 +119,13 @@ class IMAP
                 return $body;
             }
 
-            if ($type == 3){
-                $start = strpos($body,'text/html');
-                $body = substr($body,$start);
-                $start = strpos($body,'base64');
-                $body = substr($body,$start+6);
+            if ($type == 3) {
+                $start = strpos($body, 'text/html');
+                $body = substr($body, $start);
+                $start = strpos($body, 'base64');
+                $body = substr($body, $start + 6);
                 $end = strpos($body, '------');
-                $body = substr($body,0,$end);
+                $body = substr($body, 0, $end);
                 $body = base64_decode($body);
                 if (mb_detect_encoding($body, 'GBK')) {
                     $body = mb_convert_encoding($body, 'UTF-8', 'GBK');
@@ -189,70 +167,52 @@ class IMAP
 
     }
 
-    /**
-     * 标记邮件成已读
-     */
+
     public function mark_mail_read($mid)
     {
         return imap_setflag_full($this->conn, $mid, '\\Seen');
     }
 
-    /**
-     * 标记邮件成未读
-     */
+
     public function mark_mail_un_read($mid)
     {
         return imap_clearflag_full($this->conn, $mid, '\\Seen');
     }
 
-    /**
-     * 判断是否阅读了邮件 $headerinfo get_imap_header 的返回值
-     */
+
     public function is_unread($headerinfo)
     {
         if (($headerinfo->Unseen == 'U') || ($headerinfo->Recent == 'N')) return true;
         return false;
     }
 
-    /**
-     * 删除邮件
-     */
+
     public function delete_mail($mid)
     {
         if (!$this->conn) return false;
         return imap_delete($this->conn, $mid, 0);
     }
 
-    /**
-     * 获取邮件时间
-     */
 
     public function get_date($mid)
     {
         return strtotime($this->get_imap_header($mid)->MailDate);
     }
 
-    /**
-     * 关闭 IMAP 流
-     */
+
     public function close_mailbox()
     {
         if (!$this->conn) return false;
         imap_close($this->conn, CL_EXPUNGE);
     }
 
-    /**
-     * 对象销毁前关闭邮箱
-     */
+
     public function __destruct()
     {
         $this->close_mailbox();
     }
 
-    /**GBK解码
-     * @param $string
-     * @return bool|string
-     */
+
     private function _decode_GBK($string)
     {
         $newString = '';

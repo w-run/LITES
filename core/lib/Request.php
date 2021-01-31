@@ -9,7 +9,7 @@ class Request
     {
         $body = [];
         $headers = [];
-        foreach ($_SERVER as $name => $value){
+        foreach ($_SERVER as $name => $value) {
             if (substr($name, 0, 5) == 'HTTP_')
                 $headers[str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($name, 5))))] = $value;
         }
@@ -21,7 +21,7 @@ class Request
         if (substr($url, 0, 1) == "/")
             $url = substr($url, 1, strlen($url) - 1);
         $urlArr = explode("/", $url);
-        $data = array_merge($_GET,$_POST);
+        $data = array_merge($_GET, $_POST);
         unset($data['url']);
         $headers['http'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https' : 'http';
 
@@ -32,13 +32,13 @@ class Request
         $body['isAjax'] = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'));
         $body['isPost'] = isset($_SERVER['REQUEST_METHOD']) && !strcasecmp($_SERVER['REQUEST_METHOD'], 'POST');
         $body['ip'] = self::get_ip();
-        $body['isDebug'] = (array_key_exists('debug', $data) && $data['debug']=='on');
+        $body['isDebug'] = (array_key_exists('debug', $data) && $data['debug'] == 'on');
         $urlArr2 = array_splice($urlArr, 1, 2);
         ksort($body);
         return $body;
     }
 
-    public static function url_cut($url,$index=0)
+    public static function url_cut($url, $index = 0)
     {
         $urlArr = $url;
         $urlArr = array_splice($urlArr, $index, $index + 1);

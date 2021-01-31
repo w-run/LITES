@@ -2,7 +2,7 @@
 
 namespace core\lib;
 
-// To be integrated
+
 class SMTP
 {
     public $charset = 'UTF-8';
@@ -27,7 +27,7 @@ class SMTP
     protected $ct = 'text/html';
     protected $boundary = '_LITES_5be64bf46hd540654fbac1d_';
 
-    // 构造函数
+
     public function __construct($smtp_server, $from, $password = '', $debug = FALSE)
     {
         $this->debug = $debug;
@@ -64,7 +64,7 @@ class SMTP
 
     }
 
-    // 登录认证
+
     public function auth($account = '', $password = '')
     {
         if ($this->error) {
@@ -84,7 +84,7 @@ class SMTP
         $this->authed = TRUE;
     }
 
-    // 向服务器发送命令
+
     public function sendCommand($command, $code = '')
     {
         fputs($this->fp, $command . $this->delimiter);
@@ -104,7 +104,7 @@ class SMTP
         }
     }
 
-    // 转换邮件的Content-Type
+
     public function changeContentType($type = 'text')
     {
         if ($type == 'text') {
@@ -114,7 +114,7 @@ class SMTP
         }
     }
 
-    // 增加收件人, method参数：to=收件人，cc=抄送，bc=密送
+
     public function addRecipients($recipients, $method = 'to')
     {
         if (!in_array($method, array('to', 'cc', 'bc'))) {
@@ -126,7 +126,7 @@ class SMTP
         }
     }
 
-    // 移除收件人
+
     public function removeRecipients($recipients, $method = '')
     {
         if (!is_array($recipients)) {
@@ -142,7 +142,7 @@ class SMTP
         }
     }
 
-    // 请空收件人
+
     public function clearRecipients($method = '')
     {
         if (!$method && !in_array($method, array('to, bc, cc'))) {
@@ -154,7 +154,7 @@ class SMTP
         }
     }
 
-    // 将收件人名单传递给服务器
+
     public function sendRecipients()
     {
         foreach (array('to', 'bc', 'cc') as $method) {
@@ -166,7 +166,7 @@ class SMTP
         }
     }
 
-    // 增加附件， $stop为布尔值，为真则表示如果找不到附件就停止发送邮件
+
     public function addAttachments($files, $stop = FALSE)
     {
         foreach ((array)$files as $file) {
@@ -189,7 +189,7 @@ class SMTP
         }
     }
 
-    // 移除附件
+
     public function removeAttachments($attachments)
     {
         foreach ((array)$attachments as $attachment) {
@@ -199,19 +199,19 @@ class SMTP
         }
     }
 
-    // 清除附件
+
     public function clearAttachments()
     {
         $this->attachments = array();
     }
 
-    // 读取文件内容
+
     public function getFileContents($file)
     {
         return file_get_contents($file);
     }
 
-    // 转换邮件备份状态
+
     public function changeBackup($state = '')
     {
         if ($state) {
@@ -222,7 +222,7 @@ class SMTP
         return $this->backup;
     }
 
-    // 重置邮件
+
     public function resetMail()
     {
         $this->ct = 'text/html';
@@ -231,7 +231,7 @@ class SMTP
         $this->clearAttachments();
     }
 
-    //  发送邮件
+
     public function send($subject, $message, $to = '')
     {
         if (!$this->authed) {
@@ -263,7 +263,7 @@ class SMTP
         return empty($this->error);
     }
 
-    // 断开连接
+
     public function quit()
     {
         if ($this->fp) {
@@ -272,19 +272,19 @@ class SMTP
         }
     }
 
-    // 析构函数
+
     public function __destruct()
     {
         $this->quit();
     }
 
-    // 转化格式
+
     protected function formatStr($str)
     {
         return '=?' . $this->charset . '?B?' . base64_encode($str) . '?=';
     }
 
-    // 得到邮件头
+
     protected function getMailHeader($subject)
     {
         $delimiter =& $this->delimiter;
@@ -313,7 +313,7 @@ class SMTP
         return $mailheader;
     }
 
-    // 得到邮件体
+
     protected function getMailBody($message)
     {
         $delimiter =& $this->delimiter;
@@ -338,7 +338,7 @@ class SMTP
         return $mailbody;
     }
 
-    // 错误处理
+
     protected function error($msg = '')
     {
         if ($msg != '') {
@@ -347,7 +347,7 @@ class SMTP
         return $this->error;
     }
 
-    // debug
+
     protected function log($msg = '')
     {
         if ($msg != '') {

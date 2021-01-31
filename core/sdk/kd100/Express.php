@@ -1,10 +1,5 @@
 <?php
-/*  
- *  @file Express.php
- *  @project LITES_Example
- *  @author W/Run
- *  @version 2021-01-22
- */
+
 
 namespace core\sdk\kd100;
 
@@ -33,26 +28,26 @@ class Express
     {
         $url = "http://www.kuaidi100.com/autonumber/auto";
         $data = [
-            "num"=>$data,
-            "key"=>$this->key
+            "num" => $data,
+            "key" => $this->key
         ];
-        $res = Web::send($url,"POST",$data);
+        $res = Web::send($url, "POST", $data);
         return $res;
     }
 
-    public function query($data,$com)
+    public function query($data, $com)
     {
         $url = "https://poll.kuaidi100.com/poll/query.do";
         $param = [
-            "num"=>$data,
-            "com"=>$com
+            "num" => $data,
+            "com" => $com
         ];
         $data = [
-            "customer"=>$this->customer,
-            "sign"=> strtoupper(md5(json_encode($param).$this->key.$this->customer)),
-            "param"=>json_encode($param)
+            "customer" => $this->customer,
+            "sign" => strtoupper(md5(json_encode($param) . $this->key . $this->customer)),
+            "param" => json_encode($param)
         ];
-        $res = Web::send($url,"POST",$data);
-        return json_decode($res,true);
+        $res = Web::send($url, "POST", $data);
+        return json_decode($res, true);
     }
 }

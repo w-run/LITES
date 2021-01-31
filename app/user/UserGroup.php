@@ -11,23 +11,23 @@ use core\lib\Session;
 
 class UserGroup
 {
-    public static function auth($api=null,$handle=null)
+    public static function auth($api = null, $handle = null)
     {
         $ugid = self::get_ugid();
         $dao = new Data("usergroup");
         $factor = null;
-        if($api!==null)
+        if ($api !== null)
             $factor = "api = '$api'";
-        if($handle!==null)
+        if ($handle !== null)
             $factor .= " AND handle = '$handle'";
-        $res = $dao->get($factor,['api','handle',"`".$ugid."`"]);
+        $res = $dao->get($factor, ['api', 'handle', "`" . $ugid . "`"]);
         $authArr = [];
-        foreach ($res as $i => $item){
-            $authArr[$item['api']."_".$item['handle']] = $item[$ugid]=="1";
+        foreach ($res as $i => $item) {
+            $authArr[$item['api'] . "_" . $item['handle']] = $item[$ugid] == "1";
         }
-        if($handle!==null)
-            if(count($authArr)==1)
-                return $authArr["$api"."_$handle"];
+        if ($handle !== null)
+            if (count($authArr) == 1)
+                return $authArr["$api" . "_$handle"];
             else
                 return true;
         return $authArr;

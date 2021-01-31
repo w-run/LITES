@@ -1,11 +1,11 @@
 <?php
 $errMsg = "Unknow Error";
 $errCode = "-1";
-if (array_key_exists("state", $_GET)){
+if (array_key_exists("state", $_GET)) {
     $errMsg = ["1" => "Request Error", "3" => "App Error", "4" => "Not found", "5" => "Server Error"][$_GET['state']];
     $errCode = ["1" => 101, "3" => 306, "4" => 104, "5" => 300][$_GET['state']];
 }
-header("ErrCode: ". $errCode);
+header("ErrCode: " . $errCode);
 header("ErrMsg: " . strtolower($errMsg));
 ?>
 <html>

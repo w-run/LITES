@@ -33,7 +33,7 @@ class Response
         foreach ($headers as $k => $v)
             header(ucfirst($k) . ":$v");
 
-        // Access Control
+
         if (in_array($headers['Content-type'], [
             'text/json;charset=utf-8',
             'text/html;charset=utf-8'

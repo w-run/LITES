@@ -45,7 +45,7 @@ class WePay
     {
         //获取微信支付秘钥
         $key = $this->config['pay_apikey'];
-        // 去空
+
         $data = array_filter($data);
         //签名步骤一：按字典序排序参数
         ksort($data);
@@ -55,11 +55,11 @@ class WePay
         $string_sign_temp = $string_a . "&key=" . $key;
         //签名步骤三：MD5加密
         $sign = md5($string_sign_temp);
-        // 签名步骤四：所有字符转为大写
+
         return strtoupper($sign);
     }
 
-    // 统一下单
+
     public function request($openid, $order)
     {
         $config = $this->config;
@@ -106,7 +106,7 @@ class WePay
         return $resdata;
     }
 
-    // 退款
+
     public function refund($order)
     {
         $config = $this->config;
@@ -138,7 +138,7 @@ class WePay
         return $content;
     }
 
-    // 企业转账
+
     public function transfers($openid, $price, $desc, $no)
     {
         $config = $this->config;
@@ -172,7 +172,7 @@ class WePay
         return $content;
     }
 
-    // 订单查询
+
     public function query($order)
     {
         $config = $this->config;
@@ -202,26 +202,26 @@ class WePay
         return $content;
     }
 
-    // 回调
+
     public function notify()
     {
         $xml = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : file_get_contents("php://input");        //获取微信支付服务器返回的数据
         //将服务器返回的XML数据转化为数组
         $data = XML::xml2array($xml);
-        // 保存微信服务器返回的签名sign
+
         $data_sign = $data['sign'];
-        // sign不参与签名算法
+
         unset($data['sign']);
         $sign = self::makeSign($data);
 
-        // 判断签名是否正确  判断支付状态
+
         if (($sign === $data_sign) && ($data['return_code'] == 'SUCCESS') && ($data['result_code'] == 'SUCCESS')) {
             $result = $data;
             //在此更新数据库
         } else {
             $result = false;
         }
-        // 返回状态给微信服务器
+
         if ($result) {
             $str = '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         } else {
