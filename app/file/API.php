@@ -17,7 +17,7 @@ class API extends BaseAPI
         if ($from == "image") {
             $callback['url'] = File::upload($file);
         } else {
-            $callback['url']  = File::upload(
+            $callback['url'] = File::upload(
                 $file,
                 "res/file",
                 ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'zip', 'rar', '7z', 'txt', 'jpg', 'png', 'gif', 'mp3', 'wav', 'mp4', 'avi', 'flv'],

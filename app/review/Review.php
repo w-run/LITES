@@ -11,8 +11,6 @@ class Review
     private $rows = array("rid", "tid", "uid", "content", "time", "state");
 
 
-
-
     public function get($show_factor, $p, $s)
     {
         $start = 0;

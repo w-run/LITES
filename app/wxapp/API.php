@@ -29,9 +29,9 @@ class API extends BaseAPI
         $form = $this->getForm("session data iv");
         $wa = new WxApp();
         $res = $wa->decrypt($form['session'], $form['data'], $form['iv']);
-        if($res['state']){
+        if ($res['state']) {
             $this->callback($res['data']);
-        }else
+        } else
             $this->callback_error($res['errMsg']);
     }
 }
