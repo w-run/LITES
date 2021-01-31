@@ -32,12 +32,12 @@ class BaseAPI
     }
 
 
-    public function custom_init()
+    protected function custom_init()
     {
     }
 
 
-    public function init($func)
+    private function init($func)
     {
         $this->custom_init();
 
@@ -66,7 +66,7 @@ class BaseAPI
     }
 
 
-    public function callback($data = "", $header = array())
+    protected function callback($data = "", $header = array())
     {
         $res = array(
             "code" => ERR_OK,
@@ -85,7 +85,7 @@ class BaseAPI
     }
 
 
-    public function callback_error($errMsg, $data = "")
+    protected function callback_error($errMsg, $data = "")
     {
         $res = array(
             "code" => ERR_API_ERROR,
@@ -107,7 +107,7 @@ class BaseAPI
     }
 
 
-    public function getForm($require = "")
+    protected function getForm($require = "")
     {
         $form = array();
         $missed = array();
@@ -126,7 +126,7 @@ class BaseAPI
     }
 
 
-    public function getForm_opt($optional = "", $default = null)
+    protected function getForm_opt($optional = "", $default = null)
     {
         if (array_key_exists($optional, $this->form) && $this->form[$optional] != "")
             return $this->form[$optional];
@@ -134,7 +134,7 @@ class BaseAPI
             return $default;
     }
 
-    public function getUid()
+    protected function getUid()
     {
         $uid = (new User())->get_login()['uid'];
         if ($uid == null)
