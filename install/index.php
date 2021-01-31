@@ -136,7 +136,7 @@ if (count($_POST) != 0) {
     </div>
     <div class="input-box">
         <label for="mysql_pwd">密码</label>
-        <input type="text" id="mysql_pwd" value="" placeholder="MySQL数据库密码"/>
+        <input type="password" id="mysql_pwd" value="" placeholder="MySQL数据库密码"/>
     </div>
     <div class="install-btns">
         <button type="button" onclick="install.test()">数据库测试</button>
