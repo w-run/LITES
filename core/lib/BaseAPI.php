@@ -54,13 +54,12 @@ class BaseAPI
     }
 
 
-    public function get()
+    protected function get()
     {
         Error::callback_error(ERR_METHOD_DENIED);
     }
 
-
-    public function post()
+    protected function post()
     {
         Error::callback_error(ERR_METHOD_DENIED);
     }

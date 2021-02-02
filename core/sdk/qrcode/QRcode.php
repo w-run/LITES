@@ -89,7 +89,7 @@ class QRcode
 
     public function encodeString8bit($string, $version, $level)
     {
-        if (string == NULL) {
+        if ($string == NULL) {
             throw new Exception('empty string!');
             return NULL;
         }
@@ -127,7 +127,8 @@ class QRcode
     public static function png($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4, $saveandprint = false)
     {
         $enc = QRencode::factory($level, $size, $margin);
-        return $enc->encodePNG($text, $outfile, $saveandprint = false);
+        $enc->encodePNG($text, $outfile, $saveandprint = false);
+        return ;
     }
 
     public static function text($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4)
