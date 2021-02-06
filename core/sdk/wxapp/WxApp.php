@@ -22,7 +22,6 @@ class WxApp
         $this->secret = $config['wxapp']['secret'];
     }
 
-
     public function get_openid($code)
     {
         $url = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $this->appid . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
